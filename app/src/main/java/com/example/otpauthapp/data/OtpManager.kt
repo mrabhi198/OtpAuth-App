@@ -1,5 +1,6 @@
 package com.example.otpauthapp.data
 
+import timber.log.Timber
 import kotlin.random.Random
 
 data class OtpData(
@@ -17,6 +18,7 @@ class OtpManager{
         val otp = Random.nextInt(100000, 999999).toString()
         otpStore[email] = OtpData(otp, System.currentTimeMillis(), 0)
 
+        Timber.d("generated OTP for $email is $otp")
         return otp
     }
     fun validateOtp(email : String, input: String): Boolean{

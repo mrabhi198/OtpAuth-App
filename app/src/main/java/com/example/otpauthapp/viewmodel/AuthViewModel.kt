@@ -1,12 +1,15 @@
 package com.example.otpauthapp.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.otpauthapp.analytics.AnalyticsLogger
 import com.example.otpauthapp.data.OtpManager
 
 class AuthViewModel: ViewModel() {
     private val otpManager= OtpManager()
-    var state = AuthState()
+    var state by mutableStateOf(AuthState())
         private set
 
     fun sendOTP(email: String){

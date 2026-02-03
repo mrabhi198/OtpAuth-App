@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     SessionScreen(state.loginTime, viewModel::logout)
 
                 state.isOtpSent->
-                    OtpScreen(viewModel::verifyOtp,state.error)
+                    OtpScreen(state.error, viewModel::verifyOtp)
 
                 else ->
                     LoginScreen(viewModel::sendOTP)
