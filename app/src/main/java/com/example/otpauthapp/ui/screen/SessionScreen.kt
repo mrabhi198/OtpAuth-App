@@ -20,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import java.text.DateFormat
+import java.util.Date
 
 @Composable
 fun SessionScreen(
@@ -27,6 +29,10 @@ fun SessionScreen(
     onLogout: () -> Unit
 ) {
     var duration by remember { mutableStateOf(0L) }
+
+    val startTime = remember(sessionStart) {
+        DateFormat.getTimeInstance().format(Date(sessionStart))
+    }
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -53,7 +59,14 @@ fun SessionScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Duration: ${duration / 60}:${duration % 60}",
+                text = "Session Started: $startTime",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Duration: %02d:%02d".format(duration / 60, duration % 60),
                 style = MaterialTheme.typography.bodyLarge
             )
 
