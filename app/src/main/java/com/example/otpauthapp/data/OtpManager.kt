@@ -19,6 +19,7 @@ class OtpManager{
         otpStore[email] = OtpData(otp, System.currentTimeMillis(), 0)
 
         Timber.d("generated OTP for $email is $otp")
+
         return otp
     }
     fun validateOtp(email : String, input: String): Boolean{

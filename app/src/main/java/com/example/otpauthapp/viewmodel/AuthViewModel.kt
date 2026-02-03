@@ -12,7 +12,7 @@ class AuthViewModel: ViewModel() {
     var state by mutableStateOf(AuthState())
         private set
 
-    fun sendOTP(email: String){
+    fun sendOtp(email: String){
         otpManager.generateOtp(email)
         AnalyticsLogger.otpGenerated(email)
         state = state.copy(email, isOtpSent = true, error = null)
@@ -31,6 +31,15 @@ class AuthViewModel: ViewModel() {
             AnalyticsLogger.otpFail(state.email)
             state = state.copy(error = "invalid or expired OTP")
         }
+    }
+
+    fun resendOtp(){
+        otpManager.generateOtp(state.email)
+        AnalyticsLogger.otpGenerated(state.email)
+
+        state = state.copy(
+            error = null
+        )
     }
 
     fun logout(){

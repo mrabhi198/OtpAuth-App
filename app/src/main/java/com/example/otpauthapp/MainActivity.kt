@@ -7,11 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.otpauthapp.ui.screen.LoginScreen
 import com.example.otpauthapp.ui.screen.OtpScreen
 import com.example.otpauthapp.ui.screen.SessionScreen
@@ -23,18 +25,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel = remember { AuthViewModel() }
-            val state = viewModel.state
+            Surface(modifier = Modifier.fillMaxSize()) {
+                val viewModel: AuthViewModel = viewModel()
+                val state = viewModel.state
 
-            when {
-                state.isLoggedIn ->
-                    SessionScreen(state.loginTime, viewModel::logout)
+                when {
+                    state.isLoggedIn ->
+                        SessionScreen(state.loginTime, viewModel::logout)
 
-                state.isOtpSent->
-                    OtpScreen(state.error, viewModel::verifyOtp)
+                    state.isOtpSent ->
+                        OtpScreen(state.error, viewModel::verifyOtp, viewModel::resendOtp)
 
-                else ->
-                    LoginScreen(viewModel::sendOTP)
+                    else ->
+                        LoginScreen(viewModel::sendOtp)
+                }
             }
         }
     }

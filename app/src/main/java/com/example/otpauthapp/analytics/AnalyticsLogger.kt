@@ -4,7 +4,7 @@ import timber.log.Timber
 
 object AnalyticsLogger {
     fun otpGenerated(email : String){
-        Timber.d("OTP generated for $email")
+        Timber.d("OTP generated Successfully")
     }
 
     fun otpSuccess (email: String){
