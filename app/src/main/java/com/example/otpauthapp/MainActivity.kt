@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                         OtpScreen(state.error, viewModel::verifyOtp, viewModel::resendOtp)
 
                     else ->
-                        LoginScreen(viewModel::sendOtp)
+                        LoginScreen(state.error, viewModel::sendOtp)
                 }
             }
         }

@@ -14,6 +14,10 @@ class AuthViewModel: ViewModel() {
         private set
 
     fun sendOtp(email: String){
+        if (!isValidEmail(email)) {
+            state = state.copy(error = "please enter valid email address")
+            return
+        }
         otpManager.generateOtp(email)
         AnalyticsLogger.otpGenerated(email)
         state = state.copy(email = email, isOtpSent = true, error = null)
@@ -59,4 +63,8 @@ class AuthViewModel: ViewModel() {
         AnalyticsLogger.logout(state.email)
         state = AuthState()
     }
+}
+
+private fun isValidEmail(email: String): Boolean {
+    return email.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
